@@ -1,0 +1,37 @@
+﻿
+<partial name="_notifications" />
+
+<div class="container">
+
+    <div class="row pt-5">
+        <div class="col-6">
+            <h2 class="text-primary"> Product </h2>
+        </div>
+
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-action="Upsert" asp-controller="Product" asp-area="Admin">
+                <i class="bi bi-plus-circle-fill"></i> &nbsp; Create Product
+            </a>
+        </div>
+
+        <table id="dataTable" class="table table-bordered table-hover" style="width:100%;">
+            <thead>
+                <tr>
+                    <td> Title </td>
+                    <td> ISBN </td>
+                    <td> Price </td>
+                    <td> Author </td>
+                    <td> Category </td>
+                    <td></td>
+                </tr>
+            </thead>
+            
+        </table>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/product/dataTable_index.js" ></script>
+}

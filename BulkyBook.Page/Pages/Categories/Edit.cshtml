@@ -1,0 +1,42 @@
+﻿@page
+@model BulkyBook.Page.Pages.Categories.EditModel
+@{
+    ViewData["Title"] = "Edit Category";
+}
+
+
+<form method="post">
+    <div class="border mt-4 p-3">
+        <div class="row pb-3">
+            <h2 class="text-primary pl-3"> Edit Categroy </h2>
+            <hr />
+        </div>
+
+        <input type="hidden" asp-for="Category.Id" />
+
+        <div class="mb-3">
+            <label asp-for="Category.Name"></label>
+            <input asp-for="Category.Name" class="form-control" />
+            <span asp-validation-for="Category.Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Category.DisplayOrder"></label>
+            <input asp-for="Category.DisplayOrder" class="form-control" />
+            <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
+        </div>
+
+        <button class="btn btn-primary me-2" type="submit" style="width:150px;"> Update </button>
+        <a asp-page="/Categories/Index" class="btn btn-secondary" style="width:150px;"> Back to List </a>
+    </div>
+
+</form>
+
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}

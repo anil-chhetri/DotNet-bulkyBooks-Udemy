@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<partial name="_notifications" />
+
+<div class="container ">
+    <div class="row mt-5 p-3 ">
+        <div class="col-6 text-start">
+            <h2 class="text-primary"> Company </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-action="upsert" asp-route-Id="0" style="width:200px">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create Company
+            </a>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <table id="CmpTableData" class="table table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <td> Name </td>
+                    <td> Street Address </td>
+                    <td> City </td>
+                    <td> State </td>
+                    <td> Postal Code </td>
+                    <td>Phone Number</td>
+                    <td></td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/company/dataTable_init.js"></script>
+}
+

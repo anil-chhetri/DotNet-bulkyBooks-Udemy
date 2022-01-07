@@ -1,0 +1,49 @@
+﻿@model IEnumerable<CoverType>
+
+<partial name="_notifications" />
+
+<div class="container">
+
+<div class="row pt-5">
+    <div class="col-6">
+        <h2 class="text-primary"> Cover Types </h2>
+    </div>
+
+    <div class="col-6 text-end" >
+        <a class="btn btn-primary" asp-action="Create" asp-controller="CoverType" asp-area="Admin">
+            Create CoverType
+        </a>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td> Id </td>
+                <td> Name </td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+</div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

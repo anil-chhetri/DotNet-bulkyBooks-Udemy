@@ -1,0 +1,67 @@
+﻿@model ShoppingCartViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="card mt-5 container">
+    <div class="card-header bg-dark text-white row">
+        <div class="col-6">
+            <h4 class="p-2"> Shopping Cart </h4>
+        </div>
+        <div class="col-6 text-end ">
+            <a asp-area="customer" asp-controller="Home" asp-action="Index" class="p-2 btn btn-outline-info"> Continue Shopping </a>
+        </div>
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model.ShoppingCarts)
+        {
+            <div class="row pb-2 align-middle">
+                <div class="col-1">
+                    <img src="@item.Product.ImageUrl" class="rounded-3" style="height: 100px;" />
+                </div>
+
+                <div class="col-5">
+                    <h5 class="mb-0"> @item.Product.Title </h5>
+                    <p> Author : <strong> @item.Product.Author </strong> </p>
+
+                    @*<p>@Html.Raw(item.Product.Descriptions)</p>*@
+                </div>
+
+                <div class="col-2 mt-4">
+                    <p> <strong> @item.Product.ProductPrice </strong> X @item.Count : <strong> @(item.Product.ProductPrice * item.Count)     </strong> </p>
+                </div>
+                <div class="col-2">
+                    <a asp-action="Add" asp-route-cartId="@item.Id" class="btn btn-secondary mt-4">
+                        <i class="bi bi-cart-plus-fill"></i>
+                    </a>
+                    <a asp-action="Minus" asp-route-cartId="@item.Id" class="btn btn-secondary mt-4">
+                        <i class="bi bi-cart-dash"></i>
+                    </a>
+                </div>
+                <div class="col-1">
+                    <a asp-action="Delete" asp-route-cartId="@item.Id" class="btn btn-secondary mt-4">
+                        <i class="bi bi-cart-x-fill"></i>
+                    </a>
+                </div>
+
+            </div>
+            <hr />
+        }
+        <div class="row">
+            <div class="col-12 d-flex flex-row-reverse justify-content-between">
+                <div class="border border-info p-3 d-flex justify-content-between" style="width: 200px;">
+                    Total Price:
+                    <strong>
+                        @Model.OrderHeader.TotalAmount.ToString("C")
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-end row">
+        <div class="col-12">
+            <a asp-action="summary" class="btn btn-primary" style="width: 200px;">Summary </a>
+        </div>
+    </div>
+</div>  
