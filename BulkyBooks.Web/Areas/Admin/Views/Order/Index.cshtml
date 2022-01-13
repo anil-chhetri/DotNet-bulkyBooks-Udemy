@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    var status = Context.Request.Query["status"];
+    var pending = "text-primary";
+    var Inprocess = "text-primary";
+    var completed = "text-primary";
+    var all = "text-primary";
+
+
+    switch (status)
+    {
+        case "pending":
+            pending = "active text-white";
+            break;
+
+        case "inprocess":
+            Inprocess = "active text-white";
+            break;
+
+        case "completed":
+            completed = "active text-white";
+            break;
+
+        case "all":
+            all = "active text-white";
+            break;
+
+
+    }
+}
+
+
+
+
+<div class="p-3">
+    <div class="d-flex justify-content-between pt-4">
+        <div class="p-2">
+            <h2 class="text-primary"> Order List </h2>
+        </div>
+        <div class="p-2">
+            <ul class="list-group list-group-horizontal-sm">
+                <a style="text-decoration: None;" asp-controller="order" asp-action="index" asp-route-status="pending">
+                <li class="list-group-item @pending"> Pending </li>
+                </a>
+                <a style="text-decoration: None;" asp-controller="order" asp-action="index" asp-route-status="inprocess">
+                <li class="list-group-item @Inprocess"> In process </li>
+                </a>
+                <a style="text-decoration: None;" asp-controller="order" asp-action="index" asp-route-status="completed">
+                <li class="list-group-item @completed"> Completed </li>
+                </a>
+                <a style="text-decoration: None;" asp-controller="order" asp-action="index" asp-route-status="all">
+                <li class="list-group-item @all"> All </li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<table id="OrderData" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <td> Id </td>
+            <td> Name </td>
+            <td> Phone Number </td>
+            <td> Email </td>
+            <td> Status </td>
+            <td> Total </td>
+            <td></td>
+        </tr>
+    </thead>
+</table>
+
+
+@section Scripts {
+    <script src="~/js/Order/OrderHeaderDataTable.js"></script>
+}

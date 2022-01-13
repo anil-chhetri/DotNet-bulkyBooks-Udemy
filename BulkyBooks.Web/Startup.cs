@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +38,15 @@ namespace BulkyBooks.Web
                     .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Identity/Account/Login");
+
+            //stripe settings
+            services.Configure<StripeSettings>(Configuration.GetSection("stripe"));
+
             //services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IEmailSender, EmailSender>();
+
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -61,6 +68,8 @@ namespace BulkyBooks.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            StripeConfiguration.ApiKey = Configuration.GetSection("stripe:SecretKey").Get<string>();
 
             app.UseAuthentication();
             app.UseAuthorization();
