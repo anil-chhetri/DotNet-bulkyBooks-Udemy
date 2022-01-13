@@ -43,6 +43,7 @@ namespace BulkyBooks.DataAccess.Repository
             {
                 fromDb.SessionId = sessionId;
                 fromDb.PaymentIntentId = paymentIntentId;
+                fromDb.PaymentDate = DateTime.Now;
             }
         }
     }
