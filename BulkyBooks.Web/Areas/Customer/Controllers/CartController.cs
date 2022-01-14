@@ -3,6 +3,7 @@ using BulkyBooks.Models;
 using BulkyBooks.Models.ViewModels;
 using BulkyBooks.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 using System;
@@ -18,10 +19,12 @@ namespace BulkyBooks.Web.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IEmailSender emailSender;
 
-        public CartController(IUnitOfWork unitOfWork)
+        public CartController(IUnitOfWork unitOfWork, IEmailSender emailSender)
         {
             this.unitOfWork = unitOfWork;
+            this.emailSender = emailSender;
         }
         public IActionResult Index()
         {
@@ -146,7 +149,7 @@ namespace BulkyBooks.Web.Areas.Customer.Controllers
         [ActionName("Summary")]
         [ValidateAntiForgeryToken]
         public IActionResult PlaceOrder(ShoppingCartViewModel shoppingCartVM)
-        {
+         {
             var claims = (ClaimsIdentity)User.Identity;
             var identity = claims.FindFirst(ClaimTypes.NameIdentifier);
             var userId = identity.Value;
@@ -254,7 +257,7 @@ namespace BulkyBooks.Web.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int Id)
         {
-            OrderHeader orderHeader = unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == Id);
+            OrderHeader orderHeader = unitOfWork.OrderHeader.GetFirstOrDefault(o => o.Id == Id, "ApplicationUser");
 
             if(orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
             {
@@ -267,7 +270,8 @@ namespace BulkyBooks.Web.Areas.Customer.Controllers
                     unitOfWork.Save();
                 }
             }
-           
+
+            emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New order Bulky Books.", "<p> order completed </p>");
 
 
             List<ShoppingCart> shoppingCarts = unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
